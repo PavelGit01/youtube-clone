@@ -1,0 +1,6 @@
+.recaptcha {
+	filter: invert(1) grayscale(1);
+	> div > div {
+		@apply mx-auto;
+	}
+}
