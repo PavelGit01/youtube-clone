@@ -30,6 +30,7 @@ export const Logout = () => {
 		<button
 			onClick={() => mutate()}
 			className={'group py-3 flex items-center gap-5'}
+			title='Logout'
 		>
 			<LogOut className={'min-w-6 group-hover:text-primary transition group-hover:rotate-3'} />
 			<span>{isPending ? 'Please wait... ' : 'Logout'}</span>

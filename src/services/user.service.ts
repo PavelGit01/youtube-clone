@@ -1,17 +1,21 @@
 import { instance } from '@/api/axios'
 
 import type { ISettingsData } from '@/app/studio/settings/settings.types'
-import type { IFullUser } from '@/types/user.types'
+import type { IFullUser, IProfileResponse } from '@/types/user.types'
 
 class UserService {
 	private _USERS = '/users'
 
 	getProfile() {
-		return instance.get<IFullUser>(`${this._USERS}/profile`)
+		return instance.get<IProfileResponse>(`${this._USERS}/profile`)
 	}
 
 	updateProfile(data: ISettingsData) {
 		return instance.put<IFullUser>(`${this._USERS}/profile`, data)
+	}
+
+	toggleLike(videoId: string) {
+		return instance.put(`${this._USERS}/profile/likes`, { videoId })
 	}
 }
 

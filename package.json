@@ -1,5 +1,5 @@
 {
-  "name": "red-video-client",
+  "name": "mel-video-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,16 +15,20 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.7.3",
+    "html-react-parser": "^5.2.3",
     "jose": "^6.0.10",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.488.0",
     "next": "^15.0.0-rc.0",
     "path-to-regexp": "^8.2.0",
+    "rc-slider": "^11.1.8",
+    "rc-tooltip": "^6.4.0",
     "react": "^19.0.0-rc-4f604941-20240830",
     "react-dom": "^19.0.0-rc-4f604941-20240830",
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.55.0",
     "react-hot-toast": "^2.5.2",
+    "react-hotkeys-hook": "^5.0.1",
     "react-redux": "^9.2.0",
     "sass": "^1.77.8",
     "tailwind-merge": "^3.2.0"

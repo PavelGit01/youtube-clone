@@ -6,10 +6,11 @@ import type { IMenuItemProps } from './menu.types'
 
 export const MenuItem = ({ item, isActive, isShowedSidebar }: IMenuItemProps) => {
 	return (
-		<li>
+		<li className='list-none'>
 			<Link
 				href={item.link}
 				className={'group py-3 flex items-center gap-5'}
+				title={item.label}
 			>
 				<item.icon
 					className={cn('min-w-6 transition-color', {

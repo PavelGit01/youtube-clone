@@ -8,7 +8,16 @@ import { Provider } from 'react-redux'
 
 import { store } from '@/store'
 
-const client = new QueryClient()
+const client = new QueryClient({
+	defaultOptions: {
+		queries: {
+			retry: 1
+		},
+		mutations: {
+			retry: 1
+		}
+	}
+})
 
 export function Providers({ children }: { children: ReactNode }) {
 	return (

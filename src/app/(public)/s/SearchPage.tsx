@@ -19,7 +19,6 @@ export default function SearchPage() {
 		select: data => data.data.videos
 	})
 
-	console.log(data)
 	return (
 		<section>
 			<Heading
@@ -35,16 +34,14 @@ export default function SearchPage() {
 						className='h-36 rounded-md'
 					/>
 				)}
-				{data?.length ? (
+				{!!data?.length &&
 					data.map(video => (
 						<VideoItem
 							key={video.id}
 							video={video}
 						/>
-					))
-				) : (
-					<p>Videos not found</p>
-				)}
+					))}
+				{!isLoading && !data?.length && <p>Videos not found</p>}
 			</div>
 		</section>
 	)
