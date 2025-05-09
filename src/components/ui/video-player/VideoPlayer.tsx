@@ -35,7 +35,7 @@ export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Prop
 				ref={playerRef}
 				className='w-full aspect-video relative z-[1] rounded-xl'
 				controls={false}
-				src={`/uploads/videos/${EnumVideoPlayerQuality['1080p']}/${fileName}`}
+				src={`/uploads/videos/${EnumVideoPlayerQuality['720p']}/${fileName}`}
 				preload='metadata'
 			></video>
 			<div className='grid grid-cols-[7fr_1fr] gap-7 absolute bottom-5 left-5 right-5 z-[1]'>
@@ -50,6 +50,7 @@ export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Prop
 						currentTime={state.currentTime}
 						duration={state.videoTime}
 						onSeek={fn.onSeek}
+						progress={state.progress}
 					/>
 					<div>
 						<span>{getTime(state.videoTime)}</span>

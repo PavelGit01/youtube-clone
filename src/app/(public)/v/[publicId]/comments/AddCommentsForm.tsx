@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 
+import { Button } from '@/ui/button/Button'
 import { Textarea } from '@/ui/field/Textarea'
 
 import { useAuth } from '@/hooks/useAuth'
@@ -55,12 +56,13 @@ export function AddCommentsForm({ refetch, videoId }: Props) {
 					wrapperClassName='mb-0'
 					error={errors.text?.message}
 				/>
-				<button
+				<Button
 					disabled={isPending}
-					className='bg-border hover:bg-border/10 transition-all font-medium rounded h-max py-2.5 px-4'
+					type='submit'
+					variant='simple'
 				>
-					{isPending ? 'Commenting...' : 'Comment' }
-				</button>
+					{isPending ? 'Commenting...' : 'Comment'}
+				</Button>
 			</form>
 		</div>
 	)

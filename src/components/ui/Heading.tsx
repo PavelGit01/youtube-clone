@@ -1,4 +1,3 @@
-import cn from 'clsx'
 import type { LucideIcon } from 'lucide-react'
 import React, { type ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -27,12 +26,17 @@ export const Heading = ({
 				className
 			)}
 		>
-			{Icon && <Icon className='text-primary' />}
+			{Icon && (
+				<Icon
+					className='text-primary'
+					size={isPageHeading ? '30' : '24'}
+				/>
+			)}
 			{isH1 || isPageHeading ? (
 				<h1
 					className={twMerge(
 						'font-semibold',
-						isPageHeading ? '[2rem]' : 'text-lg',
+						isPageHeading ? 'text-[2rem]' : 'text-lg',
 						clasNameHeading
 					)}
 				>

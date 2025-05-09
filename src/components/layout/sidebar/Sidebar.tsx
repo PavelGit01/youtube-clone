@@ -38,7 +38,9 @@ export const Sidebar = ({
 				isShowedSidebar={isShowedSidebar}
 				menu={MAIN_SIDEBAR_DATA}
 			/>
-			<DynamicMyChannelMenuItem isShowedSidebar={isShowedSidebar} />
+			<ul>
+				<DynamicMyChannelMenuItem isShowedSidebar={isShowedSidebar} />
+			</ul>
 			<SidebarMenu
 				isShowedSidebar={isShowedSidebar}
 				menu={PERSONAL_SIDEBAR_DATA}

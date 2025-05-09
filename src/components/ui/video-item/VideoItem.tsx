@@ -8,16 +8,17 @@ import { PAGE } from '@/config/public-page.config'
 import { transformCount } from '@/utils/transform-count'
 import { transformDate } from '@/utils/transform-date'
 
-import { VerifiedBadge } from '../VerifiedBadge'
-
+import { VideoChannelName } from './VideoChannelName'
+import { VideoItemTitle } from './VideoItemTitle'
 import type { IVideo } from '@/types/video.types'
 
 interface Props {
 	video: IVideo
 	Icon?: LucideIcon
+	isPriority?: boolean
 }
 
-export function VideoItem({ video, Icon }: Props) {
+export function VideoItem({ video, Icon, isPriority }: Props) {
 	return (
 		<m.div
 			whileHover={{
@@ -37,11 +38,12 @@ export function VideoItem({ video, Icon }: Props) {
 						width={250}
 						height={140}
 						alt={video.title}
-						className='rounded-md'
+						className='rounded-md max-h-[119px]'
+						priority={isPriority}
 					/>
 				</Link>
 				<Link
-					href={PAGE.CHANNEL(video.channel.slug)}
+					href={PAGE.CHANNEL(video?.channel?.slug || '')}
 					className='absolute left-1.5 bottom-2'
 				>
 					<m.div
@@ -57,11 +59,12 @@ export function VideoItem({ video, Icon }: Props) {
 						className='w-[35px] h-[35px] rounded-full overflow-hidden'
 					>
 						<Image
-							src={video.channel.avatarUrl}
+							src={video?.channel?.avatarUrl || ''}
 							width={35}
 							height={35}
-							alt={video.channel.user.name || ''}
+							alt={video?.channel?.user?.name || ''}
 							className='rounded-full shadow object-cover'
+							priority={isPriority}
 						/>
 					</m.div>
 				</Link>
@@ -81,21 +84,10 @@ export function VideoItem({ video, Icon }: Props) {
 				</div>
 			</div>
 			<div className='mb-1'>
-				<Link
-					href={PAGE.VIDEO(video.publicId)}
-					className='line-clamp-2 leading-[1.3]'
-				>
-					{video.title}
-				</Link>
+				<VideoItemTitle video={video} />
 			</div>
 			<div>
-				<Link
-					href={PAGE.CHANNEL(video.channel.slug)}
-					className='flex items-center gap-1'
-				>
-					<span className='text-gray-400 text-sm'>{video.channel.user.name}</span>
-					{video.channel.isVerified && <VerifiedBadge />}
-				</Link>
+				<VideoChannelName channel={video.channel} />
 			</div>
 		</m.div>
 	)

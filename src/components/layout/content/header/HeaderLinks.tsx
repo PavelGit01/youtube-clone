@@ -8,10 +8,11 @@ import { STUDIO_PAGE } from '@/config/studio-page.config'
 
 export const HeaderLinks = () => {
 	return (
-		<div className='flex items-center gap-4'>
+		<div className='flex items-center gap-1'>
 			<Link
 				href={STUDIO_PAGE.UPLOAD_VIDEO}
-				className='transition-opacity hover:opacity-100 opacity-50'
+				className='transition-opacity hover:opacity-100 opacity-50 p-2'
+				aria-label='Upload video'
 			>
 				<AnimationIcon
 					Icon={PlusSquare}
@@ -20,7 +21,8 @@ export const HeaderLinks = () => {
 			</Link>
 			<Link
 				href={STUDIO_PAGE.HOME}
-				className='transition-opacity hover:opacity-100 opacity-50'
+				className='transition-opacity hover:opacity-100 opacity-50 p-2'
+				aria-label='Studio page'
 			>
 				<AnimationIcon
 					Icon={LayoutGrid}
@@ -29,7 +31,8 @@ export const HeaderLinks = () => {
 			</Link>
 			<Link
 				href={STUDIO_PAGE.HOME}
-				className='transition-opacity hover:opacity-100 opacity-50'
+				className='transition-opacity hover:opacity-100 opacity-50 p-2'
+				aria-label='Notification'
 			>
 				<AnimationIcon
 					Icon={Bell}

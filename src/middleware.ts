@@ -8,7 +8,7 @@ import { protectStudio } from './server-actions/middlewares/protect-studio.middl
 export async function middleware(request: NextRequest, response: NextResponse) {
 	const pathName = request.nextUrl.pathname // /studio
 
-	if (pathName.includes(STUDIO_PAGE.HOME) || pathName.includes(PAGE.SUBSCRIPTIONS)) {
+	if (pathName.includes(STUDIO_PAGE.HOME) || pathName.includes('/my')) {
 		return protectStudio(request)
 	}
 
@@ -18,5 +18,5 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 }
 
 export const config = {
-	matcher: ['/studio/:path*', '/auth/:path*', '/subscriptions/:path*']
+	matcher: ['/studio/:path*', '/auth/:path*', '/my/:path*']
 }

@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 
+
 import { clearAuthData, setAuthData } from '@/store/auth.slice'
 
 import { axiosClassic } from '@/api/axios'
@@ -59,7 +60,7 @@ class AuthService {
 
 	async initializeAuth() {
 		const initialStore = store.getState().auth
-		
+
 		if (initialStore.user) return
 
 		try {
@@ -67,20 +68,6 @@ class AuthService {
 		} catch (error) {
 			store.dispatch(clearAuthData())
 		}
-	}
-
-	async getNewTokensByRefresh(refreshToken: string) {
-		const response = await axiosClassic.post<IAuthResponse>(
-			`${this._AUTH}/access-token`,
-			{},
-			{
-				headers: {
-					Cookie: `refreshToken=${refreshToken}`
-				}
-			}
-		)
-
-		return response.data
 	}
 
 	private _saveTokenStorage(accessToken: string) {

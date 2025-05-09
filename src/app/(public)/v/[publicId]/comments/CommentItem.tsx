@@ -63,9 +63,9 @@ export function CommentItem({ comment, refetch }: Props) {
 
 					<div className=' text-gray-500 text-xs'>{transformDate(comment.createdAt)}</div>
 				</div>
-				<div>
+				<div className='w-80'>
 					<textarea
-						className='outline-none border border-transparent focus:border-border text-gray-300 text-sm leading-snug bg-transparent resize-none'
+						className='w-full overflow-auto scrollbar-none outline-none  border border-transparent focus:border-border text-gray-300 text-sm leading-snug bg-transparent resize-none'
 						value={text}
 						onChange={e => setText(e.target.value)}
 					/>

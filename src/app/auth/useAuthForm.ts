@@ -1,11 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
-import { error } from 'console'
 import { useRouter } from 'next/navigation'
 import { useRef, useTransition } from 'react'
 import type ReCAPTCHA from 'react-google-recaptcha'
 import type { SubmitHandler, UseFormReset } from 'react-hook-form'
-import toast from 'react-hot-toast'
 
 import { PAGE } from '@/config/public-page.config'
 
@@ -24,9 +22,10 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 		mutationFn: (data: IAuthData) => authService.main(type, data, recaptchaRef.current?.getValue())
 	})
 
-	const onSubmit: SubmitHandler<IAuthForm> = ({ email, password }) => {
+	const onSubmit: SubmitHandler<IAuthForm> = async ({ email, password }) => {
 		const token = recaptchaRef.current?.getValue()
 
+		const { toast } = await import('react-hot-toast')
 		if (!token) {
 			toast.error('Pass the captcha!', {
 				id: 'recaptcha'

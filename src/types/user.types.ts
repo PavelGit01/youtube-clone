@@ -1,6 +1,6 @@
 import type { IChannel } from './channel.types'
 import type { IWatchHistory } from './history.types'
-import type { IVideo } from './video.types'
+import type { IFullVideo, IVideo } from './video.types'
 
 export interface IUser {
 	id: string
@@ -17,8 +17,9 @@ export interface IFullUser extends IUser {
 
 export interface IVideoLikes {
 	id: string
-	videoId: string
+	video: IFullVideo
 	userId: string
+	videoId: string
 }
 
 export interface IProfileResponse extends IFullUser {

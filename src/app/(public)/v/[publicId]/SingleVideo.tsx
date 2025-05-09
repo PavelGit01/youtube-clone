@@ -1,6 +1,7 @@
 'use client'
 
 import cn from 'clsx'
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { Heading } from '@/ui/Heading'
@@ -8,10 +9,15 @@ import { VideoPlayer } from '@/ui/video-player/VideoPlayer'
 
 import { SimilarVideos } from './SimilarVideos'
 import { VideoActions } from './Video-actions/VideoActions'
-import { Comments } from './comments/Comments'
-import { VideoDescription } from './description/VideoDescription'
+import { useUpdateViews } from './useUpdateViews'
 import { VideoChannel } from './video-channel/VideoChannel'
 import type { ISingleVideoResponce } from '@/types/video.types'
+
+const DynamicVideoDescription = dynamic(() =>
+	import('./description/VideoDescription').then(mod => mod.VideoDescription)
+)
+
+const DynamicComments = dynamic(() => import('./comments/Comments').then(mod => mod.Comments))
 
 interface Props {
 	video: ISingleVideoResponce
@@ -19,6 +25,8 @@ interface Props {
 
 export default function SingleVideo({ video }: Props) {
 	const [isTheaterMode, setIsTheaterMode] = useState(false)
+
+	useUpdateViews({ video })
 
 	return (
 		<section className={'grid grid-cols-[3fr_.8fr] gap-10 relative'}>
@@ -49,8 +57,8 @@ export default function SingleVideo({ video }: Props) {
 					<VideoActions video={video} />
 				</div>
 				<VideoChannel video={video} />
-				<VideoDescription description={video.description} />
-				<Comments video={video} />
+				<DynamicVideoDescription description={video.description} />
+				<DynamicComments video={video} />
 			</div>
 			{!!video.similarVideos.length && (
 				<div

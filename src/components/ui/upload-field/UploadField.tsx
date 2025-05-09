@@ -1,9 +1,6 @@
 import { UploadCloud } from 'lucide-react'
-import Image from 'next/image'
 import { useId } from 'react'
 import type { FieldError } from 'react-hook-form'
-
-import { SkeletonLoader } from '../SkeletonLoader'
 
 import { ImagePreview } from './ImagePreview'
 import { useUpload } from './useUpload'
@@ -16,8 +13,8 @@ interface Props {
 	error?: FieldError
 	className?: string
 	isImage?: boolean
-	aspectRation?: '16:9' | '1:1'
 	overlay?: string
+	sizePreview?: [number, number]
 }
 
 export function UploadField({
@@ -28,8 +25,8 @@ export function UploadField({
 	folder,
 	isImage = true,
 	value,
-	aspectRation = '1:1',
-	overlay
+	overlay,
+	sizePreview
 }: Props) {
 	const { isLoading, uploadFile } = useUpload({ onChange, folder })
 
@@ -65,8 +62,8 @@ export function UploadField({
 				<ImagePreview
 					isLoading={isLoading}
 					value={value}
-					aspectRation={aspectRation}
 					overlay={overlay}
+					sizePreview={sizePreview}
 				/>
 			)}
 		</div>

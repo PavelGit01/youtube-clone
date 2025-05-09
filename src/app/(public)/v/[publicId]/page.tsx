@@ -1,23 +1,15 @@
 import type { Metadata } from 'next'
 
-import { Heading } from '@/ui/Heading'
-import { VideoPlayer } from '@/ui/video-player/VideoPlayer'
-
 import { stripHtml } from '@/utils/strip-html'
 
-import { SimilarVideos } from './SimilarVideos'
 import SingleVideo from './SingleVideo'
-import { VideoActions } from './Video-actions/VideoActions'
-import { VideoDescription } from './description/VideoDescription'
-import { VideoChannel } from './video-channel/VideoChannel'
 import { videoService } from '@/services/video.service'
 import type { TPagePublicIdProp } from '@/types/page.types'
 
 export const revalidate = 100
-export const dynamic = 'force-static'
 
 export async function generateMetadata({ params }: TPagePublicIdProp): Promise<Metadata> {
-	const { publicId } = params
+	const publicId = (await params).publicId
 	const data = await videoService.byPublicId(publicId)
 
 	const video = data.data
@@ -41,7 +33,7 @@ export async function generateStaticParams() {
 }
 
 export default async function VideoPage({ params }: TPagePublicIdProp) {
-	const { publicId } = params
+	const publicId = (await params).publicId
 
 	const data = await videoService.byPublicId(publicId)
 

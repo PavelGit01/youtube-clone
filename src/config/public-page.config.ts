@@ -4,13 +4,18 @@ class PublicPage {
 	HOME = '/'
 	TRENDING = '/trending'
 	VIDEO_GAMES = '/video-games'
+	SUBSCRIPTIONS = '/my/subscriptions'
 
 	MY_CHANNEL = '/my-channel'
-	SUBSCRIPTIONS = '/subscriptions'
-	HISTORY = '/history'
-	LIKED_VIDEOS = '/liked-videos'
+	PLAYLISTS = '/playlists'
+	HISTORY = '/my/history'
+	LIKED_VIDEOS = '/my/liked-videos'
 
 	FEEDBACK = '/feedback'
+
+	PLAYLIST(path?: string) {
+		return `/my/playlists${path ? `/${path}` : ''}`
+	}
 
 	VIDEO(path: string) {
 		return `/v/${path}`

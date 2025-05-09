@@ -1,8 +1,8 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { Heart, ListPlus } from 'lucide-react'
-import React, { startTransition, useEffect, useOptimistic, useState } from 'react'
+import { Heart } from 'lucide-react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { COLORS } from '@/constants/colors.constants'
 
@@ -10,50 +10,60 @@ import { useProfile } from '@/hooks/useProfile'
 
 import { transformCount } from '@/utils/transform-count'
 
-import { userService } from '@/services/user.service'
+import { SaveToPlaylist } from './SaveToPlaylist'
+import { userService } from '@/services/studio/user.service'
 import type { ISingleVideoResponce } from '@/types/video.types'
 
-export const VideoActions = ({ video }: { video: ISingleVideoResponce }) => {
-	const { profile } = useProfile()
+export function VideoActions({ video }: { video: ISingleVideoResponce }) {
+	const { profile, refetch } = useProfile()
 
-	const isInitiallyLiked = profile?.likes.some(like => like.videoId === video.id) || false
+	const isLiked = profile?.likes.some(like => like.videoId === video.id) || false
 
-	const [isLikedLocal, setIsLikedLocal] = useState(isInitiallyLiked)
+	const [isLikedLocal, setIsLikedLocal] = useState(isLiked)
+
 	const [optimisticLike, setOptimisticLike] = useState<number>(video.likes.length)
+
+	useEffect(() => {
+		setIsLikedLocal(isLiked)
+	}, [isLiked])
 
 	const { mutate } = useMutation({
 		mutationKey: ['like', video.id],
-		mutationFn: () => userService.toggleLike(video.id + '435'),
-		retry: 1,
+		mutationFn: () => userService.toggleLike(video.id),
 		onMutate() {
 			startTransition(() => {
-				const newState = !isLikedLocal
-				setIsLikedLocal(newState)
-				setOptimisticLike(prev => (newState ? prev + 1 : prev - 1))
+				const newIsLiked = !isLikedLocal
+				setIsLikedLocal(newIsLiked)
+				setOptimisticLike(prevLikeCount => {
+					if (newIsLiked) return prevLikeCount + 1
+					return prevLikeCount - 1
+				})
 			})
 		},
 		onError() {
 			startTransition(() => {
-				const revert = !isLikedLocal
-				setIsLikedLocal(revert)
-				setOptimisticLike(prev => (revert ? prev + 1 : prev - 1))
+				const revertedIsLiked = !isLikedLocal
+				setIsLikedLocal(revertedIsLiked)
+				setOptimisticLike(prevLikeCount => {
+					if (revertedIsLiked) return prevLikeCount + 1
+					return prevLikeCount - 1
+				})
 			})
+		},
+		onSuccess() {
+			refetch()
 		}
 	})
-
 	return (
 		<div className='flex items-center gap-7'>
-			<button className='flex items-center gap-1 transition-opacity opacity-80 hover:opacity-100'>
-				<ListPlus size={20} />
-				Save
-			</button>
+			<SaveToPlaylist video={video} />
 			<button
+				className='text-[#FF453A] flex items-center gap-1.5 transition-opacity  hover:opacity-100'
 				onClick={() => mutate()}
-				className='text-primary flex items-center gap-1.5 transition-opacity opacity-80 hover:opacity-100'
 			>
 				<Heart
 					size={20}
-					fill={isLikedLocal ? COLORS.primary : 'transparent'}
+					fill={isLikedLocal ? '#FF453A' : 'transparent'}
 				/>
 				{transformCount(optimisticLike)}
 			</button>

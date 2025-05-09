@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import dynamic from 'next/dynamic'
+import { forwardRef, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
@@ -10,10 +11,18 @@ import { SkeletonLoader } from '@/ui/SkeletonLoader'
 import { Button } from '@/ui/button/Button'
 import { Field } from '@/ui/field/Field'
 
+import { SwitchAuth } from './SwitchAuth'
 import type { IAuthForm } from './auth-form.types'
 import { useAuthForm } from './useAuthForm'
 
-import styles from './captcha.module.scss'
+const DynamicReCAPTCHA = dynamic(() => import('./Recaptcha').then(mod => mod.Recaptcha))
+
+const ForwardedRefRecapthcha = forwardRef<ReCAPTCHA>((props, ref) => (
+	<DynamicReCAPTCHA
+		{...props}
+		forwardedRef={ref}
+	/>
+))
 
 export function Auth() {
 	const [isLogin, setIsLogin] = useState(true)
@@ -37,24 +46,10 @@ export function Auth() {
 					<Logo />
 				</div>
 
-				<div className='flex justify-center mb-6'>
-					<button
-						type='button'
-						className={`px-4 py-2 font-semibold
-                        ${isLogin ? 'text-primary border-b-2 border-primary' : 'text-gray-600'}`}
-						onClick={() => setIsLogin(true)}
-					>
-						Login
-					</button>
-					<button
-						type='button'
-						className={`px-4 py-2 font-semibold 
-                        ${!isLogin ? 'text-primary border-b-2 border-primary' : 'text-gray-600'}`}
-						onClick={() => setIsLogin(false)}
-					>
-						Register
-					</button>
-				</div>
+				<SwitchAuth
+					isLogin={isLogin}
+					setIsLogin={setIsLogin}
+				/>
 
 				<form onSubmit={handleSubmit(onSubmit)}>
 					{isLoading ? (
@@ -87,18 +82,13 @@ export function Auth() {
 									placeholder='Enter password again:'
 								/>
 							)}
-							<ReCAPTCHA
-								ref={recaptchaRef}
-								size='normal'
-								sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
-								theme='light'
-								className={styles.recaptcha}
-							/>
+							<ForwardedRefRecapthcha ref={recaptchaRef} />
 						</>
 					)}
 					<div className='text-center mt-4'>
 						<Button
 							type='submit'
+							variant='primary'
 							isLoading={isLoading}
 						>
 							{isLogin ? 'Login' : 'Register'}
@@ -109,3 +99,5 @@ export function Auth() {
 		</div>
 	)
 }
+
+ForwardedRefRecapthcha.displayName = 'ForwardedRefRecapthcha'

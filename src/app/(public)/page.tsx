@@ -4,11 +4,10 @@ import type { Metadata } from 'next'
 import { Heading } from '@/ui/Heading'
 import { VideoItem } from '@/ui/video-item/VideoItem'
 
-import { Explore } from './explore/Explore'
+import { ExploreSection } from './explore/ExploreSection'
 import { videoService } from '@/services/video.service'
 
 export const revalidate = 100
-export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
 	title: 'Explore',
@@ -44,7 +43,7 @@ export default async function Home() {
 					</div>
 				</section>
 			)}
-			<Explore />
+			<ExploreSection />
 		</section>
 	)
 }

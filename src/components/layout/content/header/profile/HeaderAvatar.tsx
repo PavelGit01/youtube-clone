@@ -18,9 +18,10 @@ export const HeaderAvatar = () => {
 			<Link
 				href={STUDIO_PAGE.SETTINGS}
 				className='shrink-0'
+				aria-label='Open settings'
 			>
 				<Image
-					src={profile?.channel?.avatarUrl || '/defaultAvatar.png'}
+					src={profile?.channel?.avatarUrl || '/images/defaultAvatar.png'}
 					alt=''
 					width={40}
 					height={40}
